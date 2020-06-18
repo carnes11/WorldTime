@@ -1,11 +1,7 @@
-<div class="row justify-content-md-center">
-  <div class="col-4 clock">
-    <div class="card bg-light">
-      <h3 class="card-title text-center text-dark">
-        <div class="d-flex flex-wrap justify-content-center mt-2">
-          {{ time | date: 'HH:mm:ss' }}
-        </div>
-      </h3>
+<div class="container">
+  <h3>
+    <div class="clock">
+      {{ time | date: 'HH:mm:ss' }}
     </div>
-  </div>
+  </h3>
 </div>

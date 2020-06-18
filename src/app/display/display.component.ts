@@ -1,5 +1,4 @@
 import { Component, OnChanges, Input, SimpleChanges, OnInit } from '@angular/core';
-import { WorldTimeApiService } from '../services/world-time-api.service';
 
 @Component({
   selector: 'app-display',
@@ -7,14 +6,16 @@ import { WorldTimeApiService } from '../services/world-time-api.service';
   styleUrls: ['./display.component.css']
 })
 export class DisplayComponent implements OnChanges, OnInit {
-  @Input() newLocation: string;
+  @Input() newLocation: Date;
 
-  constructor(private worldTimeApiService:WorldTimeApiService) { }
+  constructor() { }
 
   time = new Date();
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.newLocation.currentValue) this.getTime();
+    if(changes.newLocation.currentValue) {;
+        this.displayTime(changes.newLocation.currentValue);
+      }
   }
 
   ngOnInit(): void {
@@ -23,16 +24,8 @@ export class DisplayComponent implements OnChanges, OnInit {
     }, 1000);
   }
 
-  getTime = () => {
-    this.worldTimeApiService
-    .getTime(this.newLocation)
-    .subscribe(res => {
-      this.displayTime(res);
-    });
-  }
-
   displayTime = (data) => {
-    this.time = new Date(data.datetime.slice(0,19));
+    this.time = new Date(data);
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WorldTimeApiService } from '../services/world-time-api.service';
 
 @Component({
   selector: 'app-time-zone',
@@ -6,12 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./time-zone.component.css']
 })
 export class TimeZoneComponent implements OnInit {
-  constructor() { }
+
+  constructor(private worldTimeApiService:WorldTimeApiService) { }
 
   ngOnInit(): void {
   }
 
-  selectedLocation: string;
+  selectedLocation: Date;
+  loading = false;
 
   timeZones = [
     "Europe/Warsaw",
@@ -21,8 +24,29 @@ export class TimeZoneComponent implements OnInit {
     "Africa/Cairo"
   ];
 
-  changeLocation = (location: string) => {
-    this.selectedLocation = location;
+  getTime = (data) => {
+    this.loading = true;
+    this.worldTimeApiService
+    .getTime(data)
+    .subscribe(res => {
+      this.loading = false;
+      this.changeLocation(res);
+    });
+  }
+
+  changeLocation = (data) => {
+    this.selectedLocation = new Date(data.datetime.slice(0,19));
+  }
+
+  onButtonGroupClick($event){
+    let clickedElement = $event.target || $event.srcElement;
+    if( clickedElement.nodeName === "BUTTON" ) {
+      let isCertainButtonAlreadyActive = clickedElement.parentElement.querySelector(".active");
+      if( isCertainButtonAlreadyActive ) {
+        isCertainButtonAlreadyActive.classList.remove("active");
+      }
+      clickedElement.className += " active";
+    }
   }
 
 }

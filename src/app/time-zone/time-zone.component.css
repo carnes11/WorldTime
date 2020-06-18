@@ -1,3 +1,11 @@
 .time-zone {
   margin: 5px;
 }
+
+.active {
+  background-color: #B0C4DE !important;
+}
+
+.spinner-border {
+  margin-top: 14px;
+}

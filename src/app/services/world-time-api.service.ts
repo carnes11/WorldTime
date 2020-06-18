@@ -9,6 +9,6 @@ export class WorldTimeApiService {
   constructor(private http: HttpClient) { }
 
   getTime = (location) => {
-    return this.http.get('http://worldtimeapi.org/api/timezone/' + location);
+    return this.http.get('https://worldtimeapi.org/api/timezone/' + location);
   }
 }
